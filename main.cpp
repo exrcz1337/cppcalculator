@@ -1,16 +1,31 @@
 #include <iostream>
 #include <string>
+#include <limits>
 using namespace std;
 
 int main () {
-    int num1, num2, result = 0;
+    float num1, num2, result = 0;
     char znak;
-    cout << "Введите 1 число" << endl;
-    cin >> num1;
-    cout << "Введите 2 число" << endl;
-    cin >> num2;
-    cout << "Введите знак" << endl;
+    bool isNumber = true;
+    cout << "Введите число: " << endl;
+    while (!(std::cin >> num1)) {
+        std::cin.clear(); 
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cout << "Вы ввели не число, попробуйте еще раз: " << endl;
+    }
+    cout << "Введите 2 число: " << endl;
+    while (!(std::cin >> num2)) {
+        std::cin.clear(); 
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        cout << "Вы ввели не число, попробуйте еще раз: " << endl;
+    }
+   
+    cout << "Введите знак: " << endl;                                                                                                                                                                 
     cin >> znak;
+    while (znak != '/' && znak != '*' && znak != '+' && znak != '-') {
+        cout << "Вы ввели что то помимо /*-+, попробуйте еще раз: " << endl;
+        cin >> znak;
+    }
     
     switch (znak) {
         case '+':
@@ -19,13 +34,17 @@ int main () {
         case '-':
             result = num1 - num2;
             break;
+        case '/':
+            if (num2 == 0) {
+                cout << "На 0 делить нельзя!" << endl;
+            } else {
+                result = num1 / num2;
+            }
+            break;
         case '*':
             result = num1 * num2;
             break;
-        case '/':
-            result = num1 / num2;
     }
-
     cout << "Результат: " << result << endl;
     return 0;
 }
